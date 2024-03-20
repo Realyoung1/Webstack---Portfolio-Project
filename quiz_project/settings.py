@@ -75,9 +75,16 @@ WSGI_APPLICATION = 'quiz_project.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'quiz_app',  # Use your database name here
+        'USER': 'root',  # Use your database user here
+        'PASSWORD': '',  # Use your database password here
+        'HOST': 'localhost',  # Set to your database host
+        'PORT': '3306',  # Set to your database port
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
 
@@ -99,6 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'quiz_app.CustomUser'
+
 
 
 # Internationalization
