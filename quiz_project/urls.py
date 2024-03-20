@@ -20,9 +20,9 @@ from django.contrib.auth import views as auth_views
 from quiz_app import views 
 urlpatterns = [
     path('admin/', admin.site.urls),
-     path('', views.register, name='register'),
-    path('login/', auth_views.LoginView.as_view(template_name='quiz_app/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='quiz_app/logout.html'), name='logout'),
+    path('', views.register, name='register'),
+    path('login/', views.user_login, name='login'),
+    path('logout/', views.user_logout, name='logout'),
     path('home/', views.home, name='home'),
     path('contact/', views.contact, name='contact'),
 ]

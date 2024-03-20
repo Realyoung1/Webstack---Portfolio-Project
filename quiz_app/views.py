@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from .forms import UserRegisterForm
 from django.contrib.auth.hashers import make_password
 from django.contrib import messages
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login as auth_login, logout
 
 
 
@@ -16,7 +16,14 @@ def register(request):
         gender = request.POST['gender']
         password = request.POST['password1']
         confirm_password = request.POST['password2']
-
+        User = get_user_model()
+        
+        #Checking if the email is already exist
+        if User.objects.filter(email=email).exists():
+            return HttpResponse("Email already exists. Please use a different email address.")
+        if User.objects.filter(username=username).exists():
+            return HttpResponse("Username already exists. Please use a different username.")
+        
         # Check if the two passwords match
         if password != confirm_password:
             return HttpResponse("Passwords do not match!")
@@ -24,11 +31,9 @@ def register(request):
         # Additional validation can be added here (e.g., check if username already exists)
 
         # Create new user
-        User = get_user_model()
+       
         user = User.objects.create(username=username, email=email, password=make_password(password))
         
-        # Assuming you have a profile model linked to the user where you want to store name and gender
-        # You'll need to adjust this part according to how your profile model is set up
         user.name = name
         user.gender = gender
         user.save()
@@ -48,5 +53,25 @@ def contact(request):
     return render(request, 'quiz_app/contact.html')
 
 # Login view
-def login(request):
-    return render(request, 'quiz_app/login.html')
+def user_login(request):
+     if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password1')
+
+        # Authenticating the user
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            auth_login(request, user)
+            # Redirect to a success page.
+            return redirect('home')  # Adjust 'home' to your target page after login
+        else:
+            # Return an 'invalid login' error message.
+            messages.error(request, 'Invalid username or password.')
+
+     return render(request, 'quiz_app/login.html')
+
+def user_logout(request):
+    logout(request)
+    # Redirect to login page after logout
+    return redirect('login')
