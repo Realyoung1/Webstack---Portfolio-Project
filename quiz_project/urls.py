@@ -18,6 +18,15 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from quiz_app import views 
+
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from quiz_app.api import QuizViewSet  
+
+
+router = DefaultRouter()
+router.register(r'quizzes', QuizViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.register, name='register'),
@@ -25,6 +34,10 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('home/', views.home, name='home'),
     path('contact/', views.contact, name='contact'),
+    #ApI route Path
+    path('api/', include(router.urls)),
 ]
+
+
 
 
