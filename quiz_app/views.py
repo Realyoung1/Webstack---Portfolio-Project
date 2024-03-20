@@ -27,10 +27,6 @@ def register(request):
         # Check if the two passwords match
         if password != confirm_password:
             return HttpResponse("Passwords do not match!")
-
-        # Additional validation can be added here (e.g., check if username already exists)
-
-        # Create new user
        
         user = User.objects.create(username=username, email=email, password=make_password(password))
         
@@ -39,7 +35,7 @@ def register(request):
         user.save()
 
         messages.success(request, f'Account created for {username}!')
-        return redirect('login')  # Assuming you have a 'login' url configured
+        return redirect('login')  
     else:
         form = UserRegisterForm()
     return render(request, 'quiz_app/register.html', {'form': form})
@@ -64,7 +60,7 @@ def user_login(request):
         if user is not None:
             auth_login(request, user)
             # Redirect to a success page.
-            return redirect('home')  # Adjust 'home' to your target page after login
+            return redirect('home')  
         else:
             # Return an 'invalid login' error message.
             messages.error(request, 'Invalid username or password.')
