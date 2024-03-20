@@ -1,0 +1,41 @@
+{% extends "quiz_app/base.html" %}  <!-- Adjust the path as needed -->
+
+{% block content %}
+<div class="container">
+    <h2 class="form-title">Join RealQuizer Today</h2>
+    <form method="post" class="registration-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_name">Name</label>
+            <input type="text" name="name" id="id_name" required>
+        </div>
+        <div class="form-group">
+            <label>Gender</label>
+            <select name="gender" required>
+                <option value="">Select...</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="id_username">Username</label>
+            <input type="text" name="username" id="id_username" required>
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email</label>
+            <input type="email" name="email" id="id_email" required>
+        </div>
+        <div class="form-group">
+            <label for="id_password">Password</label>
+            <input type="password" name="password" id="id_password" required>
+        </div>
+        <div class="form-group">
+            <label for="id_confirm_password">Confirm Password</label>
+            <input type="password" name="confirm_password" id="id_confirm_password" required>
+        </div>
+       
+        <button type="submit" class="submit-btn">Register</button>
+    </form>
+</div>
+{% endblock %}
+

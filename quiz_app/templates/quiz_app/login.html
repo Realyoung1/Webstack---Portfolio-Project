@@ -1,0 +1,21 @@
+{% extends "quiz_app/base.html" %}  <!-- Adjust the path as needed -->
+
+{% block content %}
+<div class="container">
+    <h2 class="form-title">Welcome back to RealQuizer</h2>
+    <form method="post" class="registration-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_email">Email</label>
+            <input type="email" name="email" placeholder="abcd@example.com" id="id_email" required>
+        </div>
+        <div class="form-group">
+            <label for="id_password">Password</label>
+            <input type="password" name="password" id="id_password" required>
+        </div>
+    
+        <button type="submit" class="submit-btn">Login</button>
+    </form>
+</div>
+{% endblock %}
+
