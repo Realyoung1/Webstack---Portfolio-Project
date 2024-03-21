@@ -1,0 +1,17 @@
+<!-- quizzes/take_quiz.html -->
+{% extends 'quiz_app/base.html' %}
+
+{% block content %}
+<h2>{{ quiz.title }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <p>{{ question.text }}</p>
+    {% for option in question.options.all %}
+    <input type="radio" name="answer" value="{{ option.id }}" id="option{{ forloop.counter }}">
+    <label for="option{{ forloop.counter }}">{{ option.text }}</label><br>
+    {% endfor %}
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

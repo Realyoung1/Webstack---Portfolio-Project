@@ -17,7 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from quiz_app import views 
+from quiz_app import views
+from quiz_app.views import quiz_list,take_quiz,quiz_score
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
@@ -34,8 +35,14 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('home/', views.home, name='home'),
     path('contact/', views.contact, name='contact'),
+    
+    #Quiz Urls
+    path('quiz_list/', quiz_list, name='quiz_list'),
+    path('quiz/<int:quiz_id>/', take_quiz, name='take_quiz'),
+    path('quiz/<int:quiz_id>/score/', quiz_score, name='quiz_score'),
     #ApI route Path
     path('api/', include(router.urls)),
+    
 ]
 
 

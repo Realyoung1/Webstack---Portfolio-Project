@@ -1,0 +1,8 @@
+<!-- quizzes/quiz_score.html -->
+{% extends 'quiz_app/base.html' %}
+
+{% block content %}
+<h2>Quiz Completed</h2>
+<p>Your score: {{ quiz_attempt.score }}</p>
+<a href="{% url 'quiz_list' %}">Take another quiz</a>
+{% endblock %}
