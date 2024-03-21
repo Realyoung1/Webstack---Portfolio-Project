@@ -82,49 +82,68 @@ def quiz_list(request):
     quizzes = Quiz.objects.filter(active=True).order_by('-date_created')
     return render(request, 'quizzes/quiz_list.html', {'quizzes': quizzes})
 
+from django.shortcuts import get_object_or_404, render, redirect
+from django.http import HttpResponseRedirect
+from .models import Quiz, Question, AnswerOption, QuizAttempt, UserAnswer
+
 def take_quiz(request, quiz_id):
+    # Retrieve the quiz object
     quiz = get_object_or_404(Quiz, id=quiz_id)
-    questions = list(quiz.questions.all())
-
+    
+    # Ensure a quiz_attempt is initialized for authenticated users at the beginning
+    if request.user.is_authenticated:
+        quiz_attempt, created = QuizAttempt.objects.get_or_create(
+            quiz=quiz,
+            user=request.user,
+            defaults={'score': 0}  # Used only if a new object is created
+        )
+    
     if request.method == 'POST':
-        score = 0
-        # Assuming each question is submitted individually
+        # Extract question ID and selected option ID from POST data
         question_id = request.POST.get('question_id')
-        selected_option_id = request.POST.get('selected_option')
+        selected_option_id = request.POST.get('answer')
 
+        # Retrieve the current question based on question_id
+        current_question = get_object_or_404(Question, id=question_id)
+        
+        # Validate and process the selected option
         if selected_option_id:
-            selected_option = AnswerOption.objects.get(id=selected_option_id)
+            selected_option = get_object_or_404(AnswerOption, id=selected_option_id)
+            # Check if the selected option is correct
             if selected_option.is_correct:
-                score += 1  # Increment score for correct answer
+                # Increment the user's score for a correct answer
+                if request.user.is_authenticated:
+                    quiz_attempt.score += 1
+                    quiz_attempt.save()
 
-            # Save user's answer (optional)
+            # Save the user's answer (if authenticated)
             if request.user.is_authenticated:
-                quiz_attempt, _ = QuizAttempt.objects.get_or_create(
-                    quiz=quiz,
-                    user=request.user,
-                    defaults={'score': 0}  # Initial score
-                )
                 UserAnswer.objects.create(
                     quiz_attempt=quiz_attempt,
-                    question=Question.objects.get(id=question_id),
-                    selected_answer=selected_option
+                    question=current_question,
+                    selected_answer=selected_option,
+                    # Assume there's a field to indicate correctness in UserAnswer
+                    is_correct=selected_option.is_correct  
                 )
 
-   
-        current_question_index = questions.index(Question.objects.get(id=question_id))
+        # Redirect to the next question or to the score page if this is the last question
+        questions = list(quiz.questions.all())
+        current_question_index = questions.index(current_question)
         if current_question_index + 1 < len(questions):
             next_question = questions[current_question_index + 1]
             return render(request, 'quizzes/take_quiz.html', {'quiz': quiz, 'question': next_question})
         else:
-            # Update final score
-            if request.user.is_authenticated:
-                quiz_attempt.score = score
-                quiz_attempt.save()
+            # This was the last question
             return HttpResponseRedirect(f'/quiz/{quiz.id}/score/')
     else:
-        # Display the first question as an example
-        question = questions[0]
-        return render(request, 'quizzes/take_quiz.html', {'quiz': quiz, 'question': question})
+        # If it's not a POST request, show the first question or a specific question
+        questions = list(quiz.questions.all())
+        if questions:
+            question = questions[0]
+            return render(request, 'quizzes/take_quiz.html', {'quiz': quiz, 'question': question})
+        else:
+            # Handle case with no questions
+            return render(request, 'quizzes/no_questions.html', {'quiz': quiz})
         
 def quiz_score(request, quiz_id):
     if not request.user.is_authenticated:
