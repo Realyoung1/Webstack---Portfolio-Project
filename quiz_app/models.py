@@ -55,7 +55,7 @@ class UserAnswer(models.Model):
     quiz_attempt = models.ForeignKey(QuizAttempt, on_delete=models.CASCADE, related_name='user_answers')
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     selected_answer = models.ForeignKey(AnswerOption, on_delete=models.CASCADE)
-    is_correct = models.BooleanField()
+    is_correct = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Answer to {self.question.text} by {self.quiz_attempt.user}: {self.selected_answer.text}"
