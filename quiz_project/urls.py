@@ -41,7 +41,7 @@ urlpatterns = [
     path('quiz/<int:quiz_id>/', take_quiz, name='take_quiz'),
     path('quiz/<int:quiz_id>/score/', quiz_score, name='quiz_score'),
     #ApI route Path
-    path('api/', include(router.urls)),
+    path('/api', include(router.urls)),
     
 ]
 
