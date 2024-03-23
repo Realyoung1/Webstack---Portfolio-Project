@@ -47,6 +47,7 @@ class QuizAttempt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='attempts')
     date_attempted = models.DateTimeField(auto_now_add=True)
     score = models.IntegerField(null=True, blank=True)
+    completed = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.user}'s attempt at {self.quiz.title} on {self.date_attempted}"

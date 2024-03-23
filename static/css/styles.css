@@ -246,3 +246,47 @@ body {
         margin-bottom: 2rem;
     }
 }
+.title_quiz {
+  padding-left: 40px;
+  font-size: 32px;
+}
+.quiz_menu {
+  display: flex;
+  width: 75%;
+  background-color: transparent;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  list-style-type: none;
+  flex-wrap: wrap;
+  
+}
+
+.quiz_list {
+  width: 250px;
+  height: 100px;
+  background-color: #fff;
+  padding-top: 15px;
+  padding-left: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.quiz_list a {
+  text-decoration: none;
+  text-align: center;
+  font-size: 26px;
+  text-transform: uppercase;
+  color: rgb(46, 50, 68);
+}
+
+
+#Take Quiz Styling
+
+/* .take_quiz {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  padding: 10px;
+  background-color: white;
+} */

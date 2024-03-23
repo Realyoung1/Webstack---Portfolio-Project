@@ -2,10 +2,10 @@
 {% extends 'quiz_app/base.html' %}
 
 {% block content %}
-<h2>Available Quizzes</h2>
-<ul>
+<h2 class="title_quiz">Available Quizzes</h2>
+<ul class="quiz_menu">
     {% for quiz in quizzes %}
-    <li>
+    <li class ="quiz_list">
         <a href="{% url 'take_quiz' quiz.id %}">{{ quiz.title }}</a>
     </li>
     {% endfor %}

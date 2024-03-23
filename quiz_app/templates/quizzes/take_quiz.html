@@ -4,15 +4,18 @@
 {% block content %}
 <h2>{{ quiz.title }}</h2>
 
-<form method="post">
+<form method="post" class="take_quiz" style="display:flex; justify-content: flex-start; height: 100vh;">
+  <div>
+
     {% csrf_token %}
     <input type="hidden" name="question_id" value="{{ question.id }}">
-    <p>{{ question.text }}</p>
+    <p class="question">{{ question.text }}</p>
     {% for option in question.options.all %}
-    <input type="radio" name="answer" value="{{ option.id }}" id="option{{ forloop.counter }}">
-    <label for="option{{ forloop.counter }}">{{ option.text }}</label><br>
+    <input type="radio" style="padding-bottom: 10px;" name="answer" value="{{ option.id }}" id="option{{ forloop.counter }}">
+    <label style="padding-bottom: 10px;" for="option{{ forloop.counter }}">{{ option.text }}</label><br>
     {% endfor %}
-    <button type="submit">Submit</button>
+    <button type="submit" class="submit_answer" style="padding: 10px 15px; border:none; border-radius: 10px; background-color: rgb(34, 53, 141); color: white; width: 150px; margin-top: 20px;">Submit</button>
+  </div>
 </form>
 
 {% endblock %}
