@@ -7,7 +7,7 @@ Description:
 Create a quiz application where users can answer multiple-choice questions. Implement scoring, time limits, and feedback. This project will reinforce Python programming skills and web development basics.
 Milestones:
 
-    Auth system/Session managemen
+    Auth system/Session management
     Storage of quiz results under user accounts (This means you need to setup db storage for your application)
     Make application responsive
     Bonus: Design your code so that you’re able to add new sets of quiz questions
