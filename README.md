@@ -1,7 +1,7 @@
 Quiz Application:
 Tech Stack:
 
-Python (Flask/Django), HTML, CS
+Python (Flask/Django), HTML, CSS
 Description:
 
 Create a quiz application where users can answer multiple-choice questions. Implement scoring, time limits, and feedback. This project will reinforce Python programming skills and web development basics.
