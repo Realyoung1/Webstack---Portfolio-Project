@@ -14,7 +14,7 @@ Milestones:
     Bonus: Expose your quiz questions in the form of a REST API
 
 
-    BELOW IS THE LINK TO MY WEBSTACK PORTFOLIO PROJECT PITC
+    BELOW IS THE LINK TO MY WEBSTACK PORTFOLIO PROJECT PITCH
     
     
     https://docs.google.com/presentation/d/1a9N8qQjGeW3gUqbUrh-1f5FDzM0OpasTt9zgnmBirns/edit
